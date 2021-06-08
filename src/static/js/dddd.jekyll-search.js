@@ -109,6 +109,7 @@ if (!window.dddd.jekyll) {
         const parameterValue = utils.getParameterValue(this._config.parameterName)
 
         utils.querySelector(this._config.input).value = parameterValue
+        console.log(this._config)
         this._config.renderResult(this.filterPost(parameterValue), parameterValue)
     }
 
