@@ -117,7 +117,7 @@ project
         
 ### Options
 | name | type | required | default | supported value | description |
-|---|:---:|:---:|:---:|:--|:--|
+|---|:---:|:---:|:--|:--|:--|
 | `input` | string | false | '#searchInput' | N/A | search input selector |
 | `targets` | array | false | ['title', 'content', 'categories', 'tags'] | title, content, categories, tags | search target property names |
 | `dateFormat` | string | false | 'yyyy.MM.dd' | yyyy, yy, MM, dd, E, hh, mm, ss, a/p | search result date format (*applicable only with default template engine*) |
@@ -125,4 +125,4 @@ project
 | `resultContainer` | string | false | '#postSection' | N/A | search result render target container selector |
 | `parameterName` | string | false | 'q' | N/A | search query string parameter name |
 | `posts` | string | true | N/A | N/A | all posts |
-| `renderResult` | function | conditional | Search.prototype.renderResult | N/A | render result function |
+| `renderResult` | function | conditional | Search.prototype.renderResult(posts: filtered post list, q: search queyrstring paramter value) | N/A | render search result function |
