@@ -92,7 +92,19 @@ if (!window.dddd.jekyll) {
         resultContainer: '#postSection',
         parameterName: 'q',
         posts: [],
-        renderResult: function(posts, q) {}
+        renderResult: function (posts, q) {
+            try {
+                const html = _.template(utils.querySelector(this.resultTemplate).innerText)({
+                    posts,
+                    q,
+                    formatDate: (date) => utils.formatDate(date, this.dateFormat)
+                })
+
+                utils.querySelector(this.resultContainer).innerHTML = html
+            } catch (e) {
+                utils.warning('Please check resultTemplate or resultContainer')
+            }
+        }
     }
 
     function Search (options) {
@@ -109,7 +121,6 @@ if (!window.dddd.jekyll) {
         const parameterValue = utils.getParameterValue(this._config.parameterName)
 
         utils.querySelector(this._config.input).value = parameterValue
-        console.log(this._config)
         this._config.renderResult(this.filterPost(parameterValue), parameterValue)
     }
 
@@ -124,8 +135,6 @@ if (!window.dddd.jekyll) {
                 renderResult: this.renderResult,
                 ...options
             }
-
-            console.log(this._config, this.renderResult)
         } catch (e) {
             utils.warning(e)
             throw e;
@@ -153,22 +162,5 @@ if (!window.dddd.jekyll) {
         }
     }
 
-    Search.prototype.renderResult = function (posts, q) {
-        try {
-            console.log(this._config)
-            const html = _.template(utils.querySelector(this._config.resultTemplate).innerText)({
-                posts,
-                q,
-                formatDate: (date) => utils.formatDate(date, this._config.dateFormat)
-            })
-
-            utils.querySelector(this._config.resultContainer).innerHTML = html
-        } catch (e) {
-            utils.warning('Please check resultTemplate or resultContainer')
-        }
-    }
-
     win.dddd.jekyll.Search = Search
 })(window, document, location)
-
-
