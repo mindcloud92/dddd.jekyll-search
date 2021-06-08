@@ -92,7 +92,7 @@ if (!window.dddd.jekyll) {
         resultContainer: '#postSection',
         parameterName: 'q',
         posts: [],
-        renderResult: (posts, q) => {}
+        renderResult: function(posts, q) {}
     }
 
     function Search (options) {
