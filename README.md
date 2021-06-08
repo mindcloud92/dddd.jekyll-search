@@ -1,7 +1,7 @@
 # dddd.jekyll-search
 
 ### Usecases
-- [DdDd](http://super-dev.xyz/search/?q=jekyll)
+- [DdDd](https://super-dev.xyz/search/?q=jekyll)
 
 ### Project structure
 ```text
