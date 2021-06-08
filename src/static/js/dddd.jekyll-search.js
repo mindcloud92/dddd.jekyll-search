@@ -134,17 +134,17 @@ if (!window.dddd.jekyll) {
     Search.prototype.getAllPost = function () {
         return [
             {% for post in site.posts %}
-        {
-            "title": "{{ post.title | xml_escape }}",
-            "categories": [{% for category in post.categories %} "{{ category }}" {% unless forloop.last %},{% endunless %} {% endfor %}],
-            "content": {{ post.content | strip_html | strip_newlines | jsonify }},
-            "tags": [{% for tag in post.tags %} "{{ tag }}" {% unless forloop.last %},{% endunless %} {% endfor %}],
-            "date": "{{ post.date }}",
-            "url": "{{ post.url | xml_escape | relative_url }}"
-        }
-        {% unless forloop.last %},{% endunless %}
-        {% endfor %}
-    ]
+                {
+                    "title": "{{ post.title | xml_escape }}",
+                    "categories": [{% for category in post.categories %} "{{ category }}" {% unless forloop.last %},{% endunless %} {% endfor %}],
+                    "content": {{ post.content | strip_html | strip_newlines | jsonify }},
+                    "tags": [{% for tag in post.tags %} "{{ tag }}" {% unless forloop.last %},{% endunless %} {% endfor %}],
+                    "date": "{{ post.date }}",
+                    "url": "{{ post.url | xml_escape | relative_url }}"
+                }
+                {% unless forloop.last %},{% endunless %}
+            {% endfor %}
+        ]
     }
 
     Search.prototype.filterPost = function (q) {
