@@ -132,7 +132,6 @@ if (!window.dddd.jekyll) {
 
             this._config = {
                 ...this._defaults,
-                renderResult: this.renderResult,
                 ...options
             }
         } catch (e) {
