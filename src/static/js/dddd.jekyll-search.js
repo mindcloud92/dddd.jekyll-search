@@ -1,13 +1,12 @@
----
----
+'use strict';
 
-// if (!window.dddd) {
-//     window.dddd  = {}
-// }
-//
-// if (!window.dddd.jekyll) {
-//     window.dddd.jekyll = {}
-// }
+if (!window.dddd) {
+    window.dddd  = {}
+}
+
+if (!window.dddd.jekyll) {
+    window.dddd.jekyll = {}
+}
 
 (function (win, doc, loc) {
     const utils = {
@@ -115,34 +114,18 @@
 
     Search.prototype.setConfig = function (options = {}) {
         try {
-            this._config = {
-                ...this._defaults,
-                posts: this.getAllPost(),
-                ...options
+            if (!options.posts || (!options.renderResult && !win._)) {
+                throw 'Undefined required properties.'
             }
 
-            if (!options.renderResult && !win._) {
-                throw 'Undefined \'renderResult\' function\n Please declare \'renderResult\' function or undercore library.'
+            this._config = {
+                ...this._defaults,
+                ...options
             }
         } catch (e) {
             utils.warning(e)
+            throw e;
         }
-    }
-
-    Search.prototype.getAllPost = function () {
-        return [
-            {% for post in site.posts %}
-            {
-                "title": "{{ post.title | xml_escape }}",
-                "categories": [{% for category in post.categories %} "{{ category }}" {% unless forloop.last %},{% endunless %} {% endfor %}],
-                "content": {{ post.content | strip_html | strip_newlines | jsonify }},
-                "tags": [{% for tag in post.tags %} "{{ tag }}" {% unless forloop.last %},{% endunless %} {% endfor %}],
-                "date": "{{ post.date }}",
-                "url": "{{ post.url | xml_escape | relative_url }}"
-            }
-            {% unless forloop.last %},{% endunless %}
-            {% endfor %}
-        ]
     }
 
     Search.prototype.filterPost = function (q) {
