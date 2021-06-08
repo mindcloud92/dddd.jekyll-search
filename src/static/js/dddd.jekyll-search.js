@@ -123,6 +123,8 @@ if (!window.dddd.jekyll) {
                 renderResult: this.renderResult,
                 ...options
             }
+
+            console.log(this._config, this.renderResult)
         } catch (e) {
             utils.warning(e)
             throw e;
@@ -152,6 +154,7 @@ if (!window.dddd.jekyll) {
 
     Search.prototype.renderResult = function (posts, q) {
         try {
+            console.log(this._config)
             const html = _.template(utils.querySelector(this._config.resultTemplate).innerText)({
                 posts,
                 q,
