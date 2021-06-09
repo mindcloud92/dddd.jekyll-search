@@ -8,8 +8,8 @@ if (!window.dddd.jekyll) {
     window.dddd.jekyll = {}
 }
 
-(function (window, document, location) {
-    const utils = {
+(function (window) {
+    const Utils = {
         deserializeQueryString: () => {
             const queryString = decodeURIComponent(location.href.substring(location.href.indexOf('?') + 1, location.href.length))
 
@@ -86,6 +86,13 @@ if (!window.dddd.jekyll) {
         }
     }
 
+    window.dddd.jekyll.Utils = {
+        ...window.dddd.jekyll.Utils,
+        ...Utils
+    }
+})(window);
+
+(function (window, document, location, utils) {
     const defaults = {
         input: '#searchInput',
         targets: ['title', 'content', 'categories', 'tags'],
@@ -104,7 +111,6 @@ if (!window.dddd.jekyll) {
 
                 utils.getElementBySelector(this.resultContainer).innerHTML = html
             } catch (e) {
-                console.log(e)
                 utils.log('Please check resultTemplate or resultContainer')
             }
         }
@@ -165,4 +171,4 @@ if (!window.dddd.jekyll) {
     }
 
     window.dddd.jekyll.Search = Search
-})(window, document, location)
+})(window, document, location, window.dddd.jekyll.Utils)
