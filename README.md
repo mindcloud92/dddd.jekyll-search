@@ -1,7 +1,7 @@
-# dddd.jekyll-search
+# dddd.static-search
 
 ### Usecases
-- [DdDd](https://super-dev.xyz/search/?q=jekyll)
+- [DdDd](https://super-dev.xyz/search/?q=static-search)
 
 ### Project structure
 ```text
@@ -13,7 +13,11 @@ project
     ...
 ```
 
+
 ### Getting Started
+
+- environment: Jekyll
+
 1. add `_layouts/search.html`
     - implement search area markup
         ```html
