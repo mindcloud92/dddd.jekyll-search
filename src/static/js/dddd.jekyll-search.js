@@ -69,7 +69,6 @@ if (!window.dddd.jekyll) {
         const dayNames = ["일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일"];
         const hours = date.getHours()
 
-        const _lPad = this.lPad
         return format.replace(
             /(yyyy|yy|MM|dd|E|hh|mm|ss|a\/p)/gi,
             function($1) {
