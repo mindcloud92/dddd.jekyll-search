@@ -8,79 +8,81 @@ if (!window.dddd.jekyll) {
     window.dddd.jekyll = {}
 }
 
-(function (win, doc, loc) {
+(function (window, document, location) {
     const utils = {
-        deparam: () => {
-            const paramString = decodeURIComponent(loc.href.substring(loc.href.indexOf('?') + 1, loc.href.length))
+        deserializeQueryString: () => {
+            const queryString = decodeURIComponent(location.href.substring(location.href.indexOf('?') + 1, location.href.length))
 
-            const paramPairs = paramString.split('&')
-            return paramPairs.reduce((acc, curr) => {
-                const paramPair = curr.split('=')
+            return queryString.split('&').reduce((acc, curr) => {
+                const pair = curr.split('=')
 
                 return {
-                    [paramPair[0]]: paramPair[1],
+                    [pair[0]]: pair[1],
                     ...acc
                 }
             }, {})
         },
-        warning: (message) => {
+        log: (message) => {
             console.log(`%c${message}`, 'color: #e91e63')
         },
-        getParameterValue: function (key, defaultValue = '') {
+        getQueryVariableValue: function (name, defaultValue = '') {
             try {
-                const params = this.deparam()
+                const queryVariables = this.deserializeQueryString()
 
-                const paramterValue = params[key]
-                if (paramterValue === undefined) {
-                    throw 'Not found query parameter'
+                const queryVariableValue = queryVariables[name]
+                if (queryVariableValue === undefined) {
+                    throw 'Not found query variable'
                 }
 
-                return  paramterValue
+                return  queryVariableValue
             } catch (e) {
-                this.warning(e)
+                this.log(e)
                 return defaultValue
             }
         },
-        querySelector: function (selector) {
+        getElementBySelector: function (selector) {
             try {
-                return doc.querySelector(selector)
+                return document.querySelector(selector)
             } catch (e) {
-                this.warning(`Not Found Element: ${selector}`)
+                this.log(`Not found element: ${selector}`)
                 return {}
             }
         },
-        formatDate: function (val, format) {
-            const date = new Date(val)
+        lPad: function (value, length = 2, padString = '0') {
+            let str = '';
+            for (let i = 0; i < length - value.toString().length; i++) {
+                str += padString;
+            }
+
+            return `${str}${value}`
+        },
+        formatDate: function (value, format) {
+            const date = new Date(value)
             if (!date) {
                 return '';
             }
 
-            const weekName = ["일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일"];
+            const dayNames = ["일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일"];
             const hours = date.getHours()
 
-            return format.replace(/(yyyy|yy|MM|dd|E|hh|mm|ss|a\/p)/gi, function($1) {
-                switch ($1) {
-                    case "yyyy": return date.getFullYear();
-                    case "yy": return utils.zf(date.getFullYear() % 1000);
-                    case "MM": return utils.zf(date.getMonth() + 1);
-                    case "dd": return utils.zf(date.getDate());
-                    case "E": return weekName[date.getDay()];
-                    case "HH": return utils.zf(date.getHours());
-                    case "hh": return utils.zf((hours % 12) ? hours : 12);
-                    case "mm": return utils.zf(date.getMinutes());
-                    case "ss": return utils.zf(date.getSeconds());
-                    case "a/p": return date.getHours() < 12 ? "오전" : "오후";
-                    default: return $1;
-                }
-            });
-        },
-        zf: function (val, len = 2) {
-            let str = '';
-            for (let i = 0; i < len - val.toString().length; i++) {
-                str += '0';
-            }
-
-            return `${str}${val}`
+            const _lPad = this.lPad
+            return format.replace(
+                /(yyyy|yy|MM|dd|E|hh|mm|ss|a\/p)/gi,
+                function($1) {
+                    switch ($1) {
+                        case 'yyyy': return date.getFullYear();
+                        case 'yy': return _lPad(date.getFullYear() % 1000);
+                        case 'MM': return _lPad(date.getMonth() + 1);
+                        case 'dd': return _lPad(date.getDate());
+                        case 'E': return dayNames[date.getDay()];
+                        case 'HH': return _lPad(date.getHours());
+                        case 'hh': return _lPad((hours % 12) ? hours : 12);
+                        case 'mm': return _lPad(date.getMinutes());
+                        case 'ss': return _lPad(date.getSeconds());
+                        case 'a/p': return date.getHours() < 12 ? "오전" : "오후";
+                        default: return $1;
+                    }
+                });
         }
     }
 
@@ -94,15 +96,16 @@ if (!window.dddd.jekyll) {
         posts: [],
         renderResult: function (posts, q) {
             try {
-                const html = _.template(utils.querySelector(this.resultTemplate).innerText)({
+                const html = _.template(utils.getElementBySelector(this.resultTemplate).innerText)({
                     posts,
                     q,
                     formatDate: (date) => utils.formatDate(date, this.dateFormat)
                 })
 
-                utils.querySelector(this.resultContainer).innerHTML = html
+                utils.getElementBySelector(this.resultContainer).innerHTML = html
             } catch (e) {
-                utils.warning('Please check resultTemplate or resultContainer')
+                console.log(e)
+                utils.log('Please check resultTemplate or resultContainer')
             }
         }
     }
@@ -118,15 +121,15 @@ if (!window.dddd.jekyll) {
     Search.prototype.init = function (options) {
         this.setConfig(options)
 
-        const parameterValue = utils.getParameterValue(this._config.parameterName)
+        const parameterValue = utils.getQueryVariableValue(this._config.parameterName)
 
-        utils.querySelector(this._config.input).value = parameterValue
+        utils.getElementBySelector(this._config.input).value = parameterValue
         this._config.renderResult(this.filterPost(parameterValue), parameterValue)
     }
 
     Search.prototype.setConfig = function (options = {}) {
         try {
-            if (!options.posts || (!options.renderResult && !win._)) {
+            if (!options.posts || (!options.renderResult && !window._)) {
                 throw 'Undefined required properties.'
             }
 
@@ -135,7 +138,7 @@ if (!window.dddd.jekyll) {
                 ...options
             }
         } catch (e) {
-            utils.warning(e)
+            utils.log(e)
             throw e;
         }
     }
@@ -156,10 +159,10 @@ if (!window.dddd.jekyll) {
                 })
             })
         } catch (e) {
-            utils.warning(e)
+            utils.log(e)
             return []
         }
     }
 
-    win.dddd.jekyll.Search = Search
+    window.dddd.jekyll.Search = Search
 })(window, document, location)
