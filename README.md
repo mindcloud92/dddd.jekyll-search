@@ -21,7 +21,7 @@ project
   ---
   ```
 
-2. add `search.html`
+2. add `_layouts/search.html`
     - implement search area markup
         ```html
         <div class="contents-wrapper">
