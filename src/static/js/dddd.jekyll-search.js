@@ -99,58 +99,45 @@ if (!window.dddd.jekyll) {
 })(window);
 
 (function (window, document, location, utils) {
-    const defaults = {
-        input: '#searchInput',
-        targets: ['title', 'content', 'categories', 'tags'],
-        dateFormat: 'yyyy.MM.dd',
-        resultTemplate: '#template-post-list',
-        resultContainer: '#postSection',
-        parameterName: 'q',
-        posts: [],
-        renderResult: function (posts, q) {
-            try {
-                const html = _.template(utils.getElementBySelector(this.resultTemplate).innerText)({
-                    posts,
-                    q,
-                    formatDate: (date) => utils.formatDate(date, this.dateFormat)
-                })
 
-                utils.getElementBySelector(this.resultContainer).innerHTML = html
+    const defaults = {
+        data: [],
+        element: {
+            input: '#searchInput',
+            resultTemplate: '#template-post-list',
+            resultContainer: '#postSection'
+        },
+        keyword: {
+            types: ['title', 'content', 'categories', 'tags'],
+            queryVariableName: 'q'
+        },
+        renderOptions: {
+            dateFormat: 'yyyy.MM.dd',
+        },
+        renderResult: function (data, keyword, { element, renderOptions }) {
+            try {
+                const templateString = utils.getElementBySelector(element.resultTemplate).innerText
+
+                utils.getElementBySelector(element.resultContainer).innerHTML = _.template(templateString)({
+                    data,
+                    keyword,
+                    formatDate: (date) => utils.formatDate(date, renderOptions.dateFormat)
+                })
             } catch (e) {
                 utils.writeLog('Please check resultTemplate or resultContainer')
+                utils.writeLog(e)
             }
         }
     }
 
-    // search.setConfig()
-    // search.renderResult()
-
-
-    function Search (options) {
-        this._defaults = defaults
-
-        this.init(options)
-
-        return this;
-    }
-
-    Search.prototype.init = function (options) {
-        this.setConfig(options)
-
-        const parameterValue = utils.getQueryVariableValue(this._config.parameterName)
-
-        utils.getElementBySelector(this._config.input).value = parameterValue
-        this._config.renderResult(this.filterPost(parameterValue), parameterValue)
-    }
-
-    Search.prototype.setConfig = function (options = {}) {
+    function createConfig (options) {
         try {
-            if (!options.posts || (!options.renderResult && !window._)) {
-                throw 'Undefined required properties.'
+            if (!options.data || (!options.renderResult && !_)) {
+                throw 'Undefined required option'
             }
 
-            this._config = {
-                ...this._defaults,
+            return {
+                ...defaults,
                 ...options
             }
         } catch (e) {
@@ -159,19 +146,19 @@ if (!window.dddd.jekyll) {
         }
     }
 
-    Search.prototype.filterPost = function (q) {
+    function filterData (keyword, config) {
         try {
-            if (!(this._config.posts instanceof Array)) {
-                throw 'Mismatch post type'
+            if (!(config.data instanceof Array)) {
+                throw 'Mismatch data type'
             }
 
-            if (!q) {
+            if (!keyword) {
                 return []
             }
 
-            return this._config.posts.filter((post) => {
-                return this._config.targets.some(target => {
-                    return post[target].indexOf(q) > -1
+            return config.data.filter((d) => {
+                return config.keyword.types.some(type => {
+                    return d[type].indexOf(keyword) > -1
                 })
             })
         } catch (e) {
@@ -180,5 +167,16 @@ if (!window.dddd.jekyll) {
         }
     }
 
-    window.dddd.jekyll.Search = Search
+    function renderResult (options) {
+        const config = createConfig(options)
+        const keyword = utils.getQueryVariableValue(config.keyword.queryVariableName)
+
+        utils.getElementBySelector(config.element.input).value = keyword
+        config.renderResult(filterData(keyword, config), keyword, config)
+    }
+
+
+    window.dddd.jekyll.Search = {
+        renderResult
+    }
 })(window, document, location, window.dddd.jekyll.Utils)
