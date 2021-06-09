@@ -9,86 +9,93 @@ if (!window.dddd.jekyll) {
 }
 
 (function (window) {
-    const Utils = {
-        deserializeQueryString: () => {
-            const queryString = decodeURIComponent(location.href.substring(location.href.indexOf('?') + 1, location.href.length))
+    function deserializeQueryString () {
+        const queryString = decodeURIComponent(location.href.substring(location.href.indexOf('?') + 1, location.href.length))
 
-            return queryString.split('&').reduce((acc, curr) => {
-                const pair = curr.split('=')
+        return queryString.split('&').reduce((acc, curr) => {
+            const pair = curr.split('=')
 
-                return {
-                    [pair[0]]: pair[1],
-                    ...acc
-                }
-            }, {})
-        },
-        log: (message) => {
-            console.log(`%c${message}`, 'color: #e91e63')
-        },
-        getQueryVariableValue: function (name, defaultValue = '') {
-            try {
-                const queryVariables = this.deserializeQueryString()
-
-                const queryVariableValue = queryVariables[name]
-                if (queryVariableValue === undefined) {
-                    throw 'Not found query variable'
-                }
-
-                return  queryVariableValue
-            } catch (e) {
-                this.log(e)
-                return defaultValue
+            return {
+                [pair[0]]: pair[1],
+                ...acc
             }
-        },
-        getElementBySelector: function (selector) {
-            try {
-                return document.querySelector(selector)
-            } catch (e) {
-                this.log(`Not found element: ${selector}`)
-                return {}
-            }
-        },
-        lPad: function (value, length = 2, padString = '0') {
-            let str = '';
-            for (let i = 0; i < length - value.toString().length; i++) {
-                str += padString;
+        }, {})
+    }
+
+    function writeLog (message) {
+        console.log(`%c${message}`, 'color: #e91e63')
+    }
+
+    function getQueryVariableValue (name, defaultValue = '') {
+        try {
+            const queryVariables = this.deserializeQueryString()
+
+            const queryVariableValue = queryVariables[name]
+            if (queryVariableValue === undefined) {
+                throw 'Not found query variable'
             }
 
-            return `${str}${value}`
-        },
-        formatDate: function (value, format) {
-            const date = new Date(value)
-            if (!date) {
-                return '';
-            }
-
-            const dayNames = ["일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일"];
-            const hours = date.getHours()
-
-            const _lPad = this.lPad
-            return format.replace(
-                /(yyyy|yy|MM|dd|E|hh|mm|ss|a\/p)/gi,
-                function($1) {
-                    switch ($1) {
-                        case 'yyyy': return date.getFullYear();
-                        case 'yy': return _lPad(date.getFullYear() % 1000);
-                        case 'MM': return _lPad(date.getMonth() + 1);
-                        case 'dd': return _lPad(date.getDate());
-                        case 'E': return dayNames[date.getDay()];
-                        case 'HH': return _lPad(date.getHours());
-                        case 'hh': return _lPad((hours % 12) ? hours : 12);
-                        case 'mm': return _lPad(date.getMinutes());
-                        case 'ss': return _lPad(date.getSeconds());
-                        case 'a/p': return date.getHours() < 12 ? "오전" : "오후";
-                        default: return $1;
-                    }
-                });
+            return  queryVariableValue
+        } catch (e) {
+            writeLog(e)
+            return defaultValue
         }
+    }
+
+    function getElementBySelector (selector) {
+        try {
+            return document.querySelector(selector)
+        } catch (e) {
+            this.writeLog(`Not found element: ${selector}`)
+            return {}
+        }
+    }
+
+    function leftPad (value, length = 2, padString = '0') {
+        let str = '';
+        for (let i = 0; i < length - value.toString().length; i++) {
+            str += padString;
+        }
+
+        return `${str}${value}`
+    }
+
+    function formatDate (value, format) {
+        const date = new Date(value)
+        if (!date) {
+            return '';
+        }
+
+        const dayNames = ["일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일"];
+        const hours = date.getHours()
+
+        const _lPad = this.lPad
+        return format.replace(
+            /(yyyy|yy|MM|dd|E|hh|mm|ss|a\/p)/gi,
+            function($1) {
+                switch ($1) {
+                    case 'yyyy': return date.getFullYear();
+                    case 'yy': return leftPad(date.getFullYear() % 1000);
+                    case 'MM': return leftPad(date.getMonth() + 1);
+                    case 'dd': return leftPad(date.getDate());
+                    case 'E': return dayNames[date.getDay()];
+                    case 'HH': return leftPad(date.getHours());
+                    case 'hh': return leftPad((hours % 12) ? hours : 12);
+                    case 'mm': return leftPad(date.getMinutes());
+                    case 'ss': return leftPad(date.getSeconds());
+                    case 'a/p': return date.getHours() < 12 ? "오전" : "오후";
+                    default: return $1;
+                }
+            });
     }
 
     window.dddd.jekyll.Utils = {
         ...window.dddd.jekyll.Utils,
-        ...Utils
+        deserializeQueryString,
+        writeLog,
+        getQueryVariableValue,
+        getElementBySelector,
+        formatDate
     }
 })(window);
 
@@ -111,10 +118,14 @@ if (!window.dddd.jekyll) {
 
                 utils.getElementBySelector(this.resultContainer).innerHTML = html
             } catch (e) {
-                utils.log('Please check resultTemplate or resultContainer')
+                utils.writeLog('Please check resultTemplate or resultContainer')
             }
         }
     }
+
+    // search.setConfig()
+    // search.renderResult()
+
 
     function Search (options) {
         this._defaults = defaults
@@ -144,7 +155,7 @@ if (!window.dddd.jekyll) {
                 ...options
             }
         } catch (e) {
-            utils.log(e)
+            utils.writeLog(e)
             throw e;
         }
     }
@@ -165,7 +176,7 @@ if (!window.dddd.jekyll) {
                 })
             })
         } catch (e) {
-            utils.log(e)
+            utils.writeLog(e)
             return []
         }
     }
