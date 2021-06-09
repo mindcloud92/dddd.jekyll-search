@@ -14,14 +14,7 @@ project
 ```
 
 ### Getting Started
-1. add `search.md`
-  ```markdown
-  ---
-  layout: search
-  ---
-  ```
-
-2. add `_layouts/search.html`
+1. add `_layouts/search.html`
     - implement search area markup
         ```html
         <div class="contents-wrapper">
@@ -62,7 +55,7 @@ project
         ```
 
     
-    2-1. When using the default template engine(default: underscore)
+    1-1. When using the default template engine(default: underscore)
     
     - import template engine library with CDN
         ```html
@@ -86,7 +79,7 @@ project
         </script>
         ```
 
-    2-2. customizing render result function
+    1-2. customizing render result function
     - implement onload event
 
         ```javascript
@@ -100,6 +93,13 @@ project
         }
         ```
         
+2. add `search.md`
+    ```markdown
+    ---
+    layout: search
+    ---
+    ```
+  
 ### Options
 | name | type | required | default | supported value | description |
 |---|:---:|:---:|:--|:--|:--|
