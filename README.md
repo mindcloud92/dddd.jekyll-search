@@ -34,7 +34,7 @@ project
     
     - import `dddd.jekyll-search` library with CDN
         ```html
-        <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/mindcloud92/dddd.jekyll-search@af0ec0f5a986666289dfc2b821ac57bce1f42a3a/src/static/js/dddd.jekyll-search.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/mindcloud92/dddd.jekyll-search@af0ec0f5a986666289dfc2b821ac57bce1f42a3a/src/static/js/dddd.static-search.js"></script>
         ```
    
     - implement get all post function

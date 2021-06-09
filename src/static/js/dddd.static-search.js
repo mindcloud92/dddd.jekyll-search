@@ -4,8 +4,8 @@ if (!window.dddd) {
     window.dddd  = {}
 }
 
-if (!window.dddd.jekyll) {
-    window.dddd.jekyll = {}
+if (!window.dddd.static) {
+    window.dddd.static = {}
 }
 
 (function (window) {
@@ -88,8 +88,8 @@ if (!window.dddd.jekyll) {
             });
     }
 
-    window.dddd.jekyll.Utils = {
-        ...window.dddd.jekyll.Utils,
+    window.dddd.Utils = {
+        ...window.dddd.Utils,
         deserializeQueryString,
         writeLog,
         getQueryVariableValue,
@@ -176,7 +176,7 @@ if (!window.dddd.jekyll) {
     }
 
 
-    window.dddd.jekyll.Search = {
+    window.dddd.static.Search = {
         renderResult
     }
-})(window, document, location, window.dddd.jekyll.Utils)
+})(window, document, location, window.dddd.Utils)
