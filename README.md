@@ -3,22 +3,10 @@
 ### Usecases
 - [DdDd](https://super-dev.xyz/search/?q=static-search)
 
-### Project structure
-```text
-project
-    ├─ _layouts
-        ├─ search.html
-        ...
-    ├─ search.md 
-    ...
-```
-
 
 ### Getting Started
 
-- environment: Jekyll
-
-1. add `_layouts/search.html`
+1. add `search.html`
     - implement search area markup
         ```html
         <div class="contents-wrapper">
@@ -36,28 +24,6 @@ project
         ```html
         <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/mindcloud92/dddd.static-search@f542b5b31a23cda9ad481c1022799a56f96d1798/src/static/js/dddd.static-search.min.js"></script>
         ```
-   
-    - implement get all post function
-        ```html
-        <script type="text/javascript">
-            function getAllPost () {
-                return [
-                    {% for post in site.posts %}
-                    {
-                        "title": "{{ post.title | xml_escape }}",
-                        "categories": [{% for category in post.categories %} "{{ category }}" {% unless forloop.last %},{% endunless %} {% endfor %}],
-                        "content": {{ post.content | strip_html | strip_newlines | jsonify }},
-                        "tags": [{% for tag in post.tags %} "{{ tag }}" {% unless forloop.last %},{% endunless %} {% endfor %}],
-                        "date": "{{ post.date }}",
-                        "url": "{{ post.url | xml_escape | relative_url }}"
-                    }
-                    {% unless forloop.last %},{% endunless %}
-                    {% endfor %}
-                ]
-            }
-        <script>
-        ```
-
     
     1-1. When using the default template engine(default: underscore)
     
@@ -71,7 +37,7 @@ project
         window.onload = () => {
             dddd.static.Search.renderResult({
                 <!-- options -->
-                data: getAllPost()
+                data: [<!-- search target origin data -->]
             })
         }
         ```
@@ -89,20 +55,14 @@ project
         ```javascript
         window.onload = () => {
             dddd.static.Search.renderResult({
-                data: getAllPost(),
+                data: [<!-- search target origin data -->]
                 renderResult: (data, keyword, config) => {
                     <!-- render result logic -->
                 }
             })
         }
         ```
-        
-2. add `search.md`
-    ```markdown
-    ---
-    layout: search
-    ---
-    ```
+       
   
 ### Options
 | name | type | required | default | supported value | description |
