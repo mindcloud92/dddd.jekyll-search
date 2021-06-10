@@ -2,6 +2,7 @@
 
 ### Usecases
 - [DdDd](https://super-dev.xyz/search/?q=static-search)
+    - env. Jekyll
 
 
 ### Getting Started
