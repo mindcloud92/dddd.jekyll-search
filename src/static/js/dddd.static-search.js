@@ -129,6 +129,27 @@ if (!window.dddd.static) {
             }
         }
     }
+    
+    function extendDefauls (options) {
+        const { element, keyword, renderOptions } = defaults;
+            
+        return {
+            ...defaults,
+            ...options,
+            element: {
+                ...element,
+                ...options.element
+            },
+            keyword: {
+                ...keyword,
+                ...options.keyword
+            },
+            renderOptions: {
+                ...renderOptions,
+                ...options.renderOptions
+            }
+        }
+    }
 
     function createConfig (options) {
         try {
@@ -136,10 +157,7 @@ if (!window.dddd.static) {
                 throw 'Undefined required option'
             }
 
-            return {
-                ...defaults,
-                ...options
-            }
+            return extendDefauls(options);
         } catch (e) {
             utils.writeLog(e)
             throw e;
