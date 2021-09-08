@@ -22,7 +22,7 @@
     
     - import `dddd.static-search` library with CDN
         ```html
-        <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/mindcloud92/dddd.static-search@f542b5b31a23cda9ad481c1022799a56f96d1798/src/static/js/dddd.static-search.min.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/mindcloud92/dddd.static-search@624e63ddeffb4b59bb34f84fae0190f3b3655495/src/static/js/dddd.static-search.min.js"></script>
         ```
     
     1-1. When using the default template engine(default: underscore)
