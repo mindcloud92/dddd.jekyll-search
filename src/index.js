@@ -26,7 +26,7 @@
             container: '#postSection',
         };
 
-        this.render = () => {
+        this.renderResult = () => {
             const middleware = new root.Search.TemplateMiddleware({
                 ...defaults,
                 ...resultSelector
