@@ -118,5 +118,7 @@
 <br/>
 
 ### Example
-- [DdDd blog](https://super-dev.xyz)  ![environment jekyll](https://img.shields.io/badge/environment-jekyll-yellow?style=flat-square)
+![environment jekyll](https://img.shields.io/badge/environment-jekyll-orange?style=flat-square)   
+⇢ [DdDd blog](https://super-dev.xyz) 
+
 
