@@ -42,7 +42,7 @@
 </div>
 ```
 
-#### define `dddd.search` library with CDN
+#### define `dddd.static-search` library with CDN
 
 ```html
 <script type="text/javascript" src="//cdn.jsdelivr.net/gh/mindcloud92/dddd.static-search@6ab1ea67a0357bed734a216d4de9e675c13ec45a/src/dist/dddd.search.min.js"></script>
