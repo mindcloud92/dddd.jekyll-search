@@ -50,7 +50,7 @@
 
 #### implement `window.onload` function 
 
-case1) render search results using default template middleware
+**case1:** render search results using default template middleware
 * import template middleware library with CDN   
 
   ```html
@@ -74,7 +74,7 @@ case1) render search results using default template middleware
   }
   ```
     
-case2) customized
+**case2:** customized
   ```javascript
   window.onload = () => {
     const data = [<!-- search target origin data -->];
