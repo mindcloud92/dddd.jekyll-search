@@ -21,6 +21,7 @@
 
 <br/>
 
+
 ### Getting Started
 *Implement the following on the target page:*
 <br/>
@@ -47,8 +48,9 @@
 <script type="text/javascript" src="//cdn.jsdelivr.net/gh/mindcloud92/dddd.static-search@6ab1ea67a0357bed734a216d4de9e675c13ec45a/src/dist/dddd.search.min.js"></script>
 ```
 
-
 #### implement `window.onload` function 
+> Read more about [Creating an instance](https://github.com/mindcloud92/dddd.static-search/wiki/Creating-an-instance)
+
 
 **case1:** render search results using default template middleware
 * import template middleware library with CDN   
@@ -56,6 +58,7 @@
   ```html
   <script type="text/javascript" src="//cdn.jsdelivr.net/npm/underscore@1.13.1/underscore-umd-min.js"></script>
   ```
+  
 * define search result template   
 
   ```html
@@ -63,6 +66,7 @@
     <!-- search result template -->
   </script>
   ```
+  
 * implement `window.onload` function   
 
   ```javascript
@@ -74,7 +78,7 @@
   }
   ```
     
-**case2:** customized
+**case2:** customization
   ```javascript
   window.onload = () => {
     const data = [<!-- search target origin data -->];
@@ -111,7 +115,8 @@
   }
   ```
 
+<br/>
 
-
-
+### Example
+- [DdDd blog](https://super-dev.xyz)
 
