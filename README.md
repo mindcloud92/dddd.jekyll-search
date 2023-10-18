@@ -11,7 +11,7 @@
 <br/>
 
 
-[![usecase](https://user-images.githubusercontent.com/3929320/159149026-1acbfc17-8406-47be-8f14-53518b8d2c27.png)](https://super-dev.xyz/search/?q=dddd)
+[![usecase](https://user-images.githubusercontent.com/3929320/159149026-1acbfc17-8406-47be-8f14-53518b8d2c27.png)](https://mindcloud92.github.io/search/?q=search)
 
 <br/>
 
@@ -119,6 +119,6 @@
 
 ### Example
 ![environment jekyll](https://img.shields.io/badge/environment-jekyll-orange?style=flat-square)   
-⇢ [DdDd blog](https://super-dev.xyz) 
+⇢ [DdDd blog](https://mindcloud92.github.io/tech/2022/03/20/jekyll-implement-search/) 
 
 
