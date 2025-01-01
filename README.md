@@ -117,8 +117,7 @@
 
 <br/>
 
-### Example
-![environment jekyll](https://img.shields.io/badge/environment-jekyll-orange?style=flat-square)   
-⇢ [DdDd blog](https://mindcloud92.github.io/tech/2022/03/20/jekyll-implement-search/) 
+### Usage Example
+- [owner blog](https://mindcloud92.github.io/tech/2022/03/20/jekyll-implement-search/) ![environment jekyll](https://img.shields.io/badge/env-jekyll-orange?style=flat-square)  
 
 
