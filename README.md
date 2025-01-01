@@ -118,6 +118,5 @@
 <br/>
 
 ### Usage Example
-- [owner blog](https://mindcloud92.github.io/tech/2022/03/20/jekyll-implement-search/) ![environment jekyll](https://img.shields.io/badge/env-jekyll-orange?style=flat-square)  
-
-
+![jekyll](https://img.shields.io/badge/jekyll-CC0000?style=flat-square&logo=jekyll&logoColor=white) <br>
+\- [mindcloud92.github.io](https://mindcloud92.github.io/tech/2022/03/20/jekyll-implement-search/ )
